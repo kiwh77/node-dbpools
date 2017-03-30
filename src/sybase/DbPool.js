@@ -16,21 +16,6 @@ var DdPool = function (opts) {
     pool._waitCallbacks = [];
     pool._busyConnectionNums = 0;
 
-    pool._release = function(client){
-        if (client.isUseing){
-            client.callback = true;
-        }else{
-            client.disconnect();
-            var index = pool._connections.indexOf(client);
-            if (index > -1){
-                pool._connections.splice(1, index);
-                pool._connectionNums--;
-            }
-        }
-    };
-
-    
-
     pool._createConnection = function() {
         pool._connectionNums++;
         var client = new DbDriver(
